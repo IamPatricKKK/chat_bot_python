@@ -1,0 +1,179 @@
+/* Thiết lập nền cho toàn bộ trang */
+body {
+    background: #f8f9fa; /* Màu nền xám rất nhạt */
+}
+
+/* Vùng chứa chính (container) với hiệu ứng glow nhẹ và bo góc */
+.container {
+    background: #fff; /* Nền trắng */
+    border-radius: 15px; /* Bo tròn góc */
+    padding: 20px; /* Khoảng cách bên trong */
+    box-shadow:
+        0 0 8px rgba(13, 110, 253, 0.25),      /* Hiệu ứng ánh sáng xanh nhạt */
+        0 4px 12px rgba(0, 0, 0, 0.1);         /* Đổ bóng nhẹ cho chiều sâu */
+    border: 1px solid transparent; /* Biên mặc định trong suốt */
+    position: relative; /* Để có thể thêm lớp giả (pseudo-element) */
+}
+
+/* Hiệu ứng viền phát sáng quanh container */
+.container::before {
+    content: ""; /* Tạo phần tử giả */
+    position: absolute;
+    top: -3px; bottom: -3px;
+    left: -3px; right: -3px;
+    border-radius: 18px; /* Bo góc để trùng với .container */
+    pointer-events: none; /* Không ảnh hưởng đến tương tác người dùng */
+    background: linear-gradient(45deg, #0d6efd, #6610f2, #0d6efd); /* Viền chuyển sắc xanh tím */
+    filter: blur(8px); /* Làm mờ để tạo hiệu ứng glow */
+    opacity: 0.6; /* Độ trong suốt để không quá gắt */
+    z-index: -1; /* Đặt phía sau container */
+}
+
+/* Hộp chat chính */
+#main-chat-box {
+    height: 550px; /* Chiều cao cố định */
+    overflow-y: auto; /* Cuộn khi nội dung vượt quá */
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1.5px solid #0d6efd; /* Viền màu xanh */
+    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.15); /* Bóng đổ nhẹ */
+    transition: box-shadow 0.3s ease; /* Hiệu ứng chuyển mượt khi hover/focus */
+}
+
+/* Hiệu ứng khi hover hoặc khi focus vào vùng chat */
+#main-chat-box:hover,
+#main-chat-box:focus-within {
+    box-shadow: 0 0 12px rgba(13, 110, 253, 0.5); /* Tăng ánh sáng viền */
+    border-color: #0b5ed7; /* Đậm hơn */
+}
+
+/* Hộp danh sách cuộc trò chuyện */
+#chat-list {
+    height: 500px;
+    overflow-y: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1.5px solid #0d6efd;
+    box-shadow: 0 1px 4px rgba(13, 110, 253, 0.1); /* Nhẹ hơn chat-box */
+}
+
+#chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+/* Tin nhắn người dùng - căn phải, màu xanh */
+.user-msg {
+    display: inline-block;
+    text-align: right;
+    color: #0d6efd;
+    margin-bottom: 10px;
+    background-color: #daeeff;
+    border: 1px solid #91c4e7;
+    border-radius: 10px;
+    padding: 8px 12px;
+
+    /* Căn sát phải */
+    margin-left: auto;
+    max-width: 80%; /* tránh tràn khung */
+}
+
+/* Tin nhắn bot - căn trái, màu đen xám */
+.bot-msg {
+    text-align: left;
+    color: #212529;
+    margin-bottom: 10px;
+}
+
+
+
+/* Input nhập tin nhắn full width */
+#input-msg {
+    width: 100%;
+}
+
+/* Cấu trúc chat list (trùng khai báo nhưng có thêm ở dưới) */
+#chat-list {
+    height: 500px;
+    overflow-y: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Mỗi item trong danh sách chat */
+.chat-item {
+    cursor: pointer; /* Con trỏ dạng tay */
+    padding: 8px;
+    border-radius: 5px;
+    display: flex; /* Cho phép sắp xếp nút tên + nút xóa/sửa */
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s; /* Hover mượt */
+}
+
+/* Item đang được chọn */
+.chat-item.active {
+    background-color: #0d6efd; /* Màu nền xanh */
+    color: white; /* Chữ trắng */
+}
+
+/* Hover khi đã active - làm đậm hơn */
+.chat-item.active:hover {
+    background-color: #00366c;
+}
+
+/* Hover item chưa active - làm nền xám nhạt */
+.chat-item:not(.active):hover {
+    background-color: #e9ecef;
+}
+
+/* Tiêu đề đoạn chat - nếu quá dài thì ẩn và có dấu ... */
+.chat-title {
+    display: inline-block;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Nút đổi tên và xóa - đặt màu trung tính */
+.rename-btn,
+.delete-btn {
+    color: #6c757d;
+    font-size: 18px;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+/* Hover làm nổi bật nút rename */
+.rename-btn:hover {
+    color: #0d6efd;
+}
+
+/* Hover làm nổi bật nút delete */
+.delete-btn:hover {
+    color: #dc3545;
+}
+
+/* Khoảng cách dưới cho nút tạo cuộc trò chuyện mới */
+#new-chat-btn {
+    margin-bottom: 10px;
+}
+
+/* Keyframes tạo hiệu ứng dấu chấm chạy loading */
+@keyframes dots {
+    0% { content: "."; }
+    33% { content: ".."; }
+    66% { content: "..."; }
+    100% { content: "."; }
+}
+
+/* Chỉ định phần tử loading sử dụng animation */
+#loading-indicator::after {
+    content: ".";
+    animation: dots 1s steps(3, end) infinite; /* Chạy 3 bước, lặp vô hạn */
+}
