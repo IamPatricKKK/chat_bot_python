@@ -267,4 +267,5 @@ if __name__ == '__main__':
         os.mkdir('chat_data')
     # Khởi tạo database
     init_db()
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Render sẽ cung cấp PORT qua biến môi trường
+    app.run(host="0.0.0.0", port=port, debug=True)
